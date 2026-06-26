@@ -1,0 +1,42 @@
+board = [" " for _ in range(9)]
+
+def print_board():
+    for i in range(0, 9, 3):
+        print(board[i] + " | " + board[i+1] + " | " + board[i+2])
+        if i < 6:
+            print("--+---+--")
+
+def check_winner(player):
+    wins = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+    ]
+
+    for combo in wins:
+        if all(board[i] == player for i in combo):
+            return True
+    return False
+
+while True:
+    print_board()
+
+    move = int(input("Enter position (1-9): ")) - 1
+
+    if board[move] == " ":
+        board[move] = "X"
+
+        if check_winner("X"):
+            print_board()
+            print("You win!")
+            break
+
+        for i in range(9):
+            if board[i] == " ":
+                board[i] = "O"
+                break
+
+        if check_winner("O"):
+            print_board()
+            print("Computer wins!")
+            break
